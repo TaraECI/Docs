@@ -1,0 +1,42 @@
+name: manage-azure-policy-f78569e1
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Allowed_virtual_machine_size_SKUs_cccc23c7-8427-4f53-ad12-b6a63eb452b3/**'
+#      - 'policies/Storage_accounts_should_be_limited_by_allowed_SKUs_7433c107-6db4-4ad1-b57a-a76dce0154a1/**'
+#      - 'policies/Storage_accounts_should_have_the_specified_minimum_TLS_version_fe83a0eb-a853-422d-aac2-1bffd182c5d0/**'
+#      - 'policies/Latest_TLS_version_should_be_used_in_your_Web_App_f0e6e85b-9b9f-4a4b-b67b-f730d42f1b0b/**'
+#      - 'policies/Latest_TLS_version_should_be_used_in_your_Function_App_f9d614c5-c173-4d56-95a7-b4437057d193/**'
+#      - 'policies/Adaptive_network_hardening_recommendations_should_be_applied_on_internet_facing_virtual_machines_08e6af2d-db70-460a-bfe9-d5bd474ba9d6/**'
+#      - .github/workflows/manage-azure-policy-f78569e1.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_f78569e1}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Allowed_virtual_machine_size_SKUs_cccc23c7-8427-4f53-ad12-b6a63eb452b3/**
+          policies/Storage_accounts_should_be_limited_by_allowed_SKUs_7433c107-6db4-4ad1-b57a-a76dce0154a1/**
+          policies/Storage_accounts_should_have_the_specified_minimum_TLS_version_fe83a0eb-a853-422d-aac2-1bffd182c5d0/**
+          policies/Latest_TLS_version_should_be_used_in_your_Web_App_f0e6e85b-9b9f-4a4b-b67b-f730d42f1b0b/**
+          policies/Latest_TLS_version_should_be_used_in_your_Function_App_f9d614c5-c173-4d56-95a7-b4437057d193/**
+          policies/Adaptive_network_hardening_recommendations_should_be_applied_on_internet_facing_virtual_machines_08e6af2d-db70-460a-bfe9-d5bd474ba9d6/**
